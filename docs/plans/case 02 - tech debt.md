@@ -1,17 +1,11 @@
 # Case 02 Technical Debt
 
-## [PRE-COMMIT] Configuration Misalignment
-
-- **Status:** Resolved (2026-01-23)
-- **Severity:** Medium
-- **Description:** Current `.pre-commit-config.yaml` deviated from the Estate Standard.
-- **Resolution:** Standardised to local hooks (`language: system`), updated versions to v4.5.0, and aligned large-file limits.
-
-## [PIPELINE] Asset Hydration & Bootstrap
+## [SECURITY] Pip Security Lock (CVE-2026-1703)
 
 - **Status:** Open
-- **Severity:** Medium
-- **Description:** Per ADR 005, a mechanism is needed to sync heavy assets into the repository structure.
+- **Severity:** High
+- **Description:** Environment (`case02-env`) is running `pip 25.3`, which contains **CVE-2026-1703**. CANNOT upgrade to `pip 26.0+` because it breaks `pip-tools`.
 - **Tasks to Resolve:**
-  - Create `tools/bootstrap.py` for directory setup and asset downloading.
-  - Upload initial asset packs to external storage and document links in README.
+  - Do **NOT** upgrade pip until `pip-tools` releases a fix (approx. Late Feb 2026).
+  - Check `pip-tools` updates weekly.
+- **Notes:** If `pip-audit` flags this, verify that `pip` is on the ignore list (or accept the risk).

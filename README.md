@@ -23,6 +23,12 @@ The digital twin integrates **pre-simulated Houdini caches for each operational 
 - **Simulation Pipeline:** Houdini Pyro/Fluid simulations optimised into lightweight USD caches
 - **Data-Driven Visualisation:** Python-based sensor streams (RPM, EGT, Vibration) synchronised with visual states
 
+> **Deep Dive:**
+>
+> - [Rolls-Royce Factory Tour Transcript](./docs/knowledge_base/Flightradar24%20-%202026.01.30%20-%20How%20Rolls-Royce%20Jet%20Engines%20Are%20Built.md)
+> - [Testbed 80 Technical Specifications](./docs/knowledge_base/Testbed%2080%20-%20Technical%20Specifications%20and%20Facility%20Details.txt)
+> - [FUI and HUD Design Notes](./docs/knowledge_base/FUI%20and%20HUD.txt)
+
 ---
 
 ## 🎯 Key Technical Workflows
@@ -97,23 +103,12 @@ To keep this repository lightweight, heavy binary assets (USD Crates, Textures, 
     - *Note: This folder already exists (anchored by `.gitkeep`), so you simply unzip into it.*
     - *Result:* Your local path should look like `assets/_external/usd/my_asset.usd`.
 
-## 🛠️ Toolchain & Environment
+## 📜 Technical Stack
 
-**Required Software:**
-
-- **Houdini**: 21.0.596 (for PDG/Pyro/Fluid simulations)
-- **Omniverse**: 2024.x (USD scene assembly, Isaac Sim integration)
-- **Isaac Sim**: 5.1 (for physics simulation and sensor emulation)
-- **Python**: 3.10+ (for data generation and pipeline scripting)
-- **Conda**: For environment isolation (`case02-env`)
-
-**Install Steps:**
-
-1. **Clone:** `git clone https://github.com/MSP014/dt-openusd-showcase-case02-jet.git`
-2. **Hydration:** (See "Asset Hydration" above) - Extract assets to `assets/_external/`.
-3. **Env:** Create conda env: `conda create -n case02-env python=3.10`
-4. **Deps:** `pip install -r requirements.txt`
-5. **Hooks:** `pre-commit install`
+- **Python**: 3.10+
+- **Houdini**: 21.0.596 (PDG, Pyro, Fluid)
+- **Omniverse**: 2024.x (USD, Isaac Sim 5.1)
+- **Conda**: Environment isolation (`case02-env`)
 
 ---
 
