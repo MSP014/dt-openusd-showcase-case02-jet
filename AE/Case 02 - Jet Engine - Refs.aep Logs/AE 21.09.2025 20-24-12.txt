@@ -1,116 +1,0 @@
-Adobe After Effects v25.4 Windows 64 render log for project “Case 02 - Jet Engine - Refs.aep”
-
-Rendering started on 21.09.2025 at 20:24:12
-
-  21.09.2025 20:24:12: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-00-15-11).png    21.09.2025 20:24:14: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:14: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-00-42-19).png    21.09.2025 20:24:16: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:16: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-01-20).png    21.09.2025 20:24:17: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:17: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-08-00).png    21.09.2025 20:24:19: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:19: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-12-01).png    21.09.2025 20:24:20: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:20: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-20-04).png    21.09.2025 20:24:22: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:22: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-23-01).png    21.09.2025 20:24:23: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:23: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-24-03).png    21.09.2025 20:24:24: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:24: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-26-11).png    21.09.2025 20:24:26: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:27: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-31-02).png    21.09.2025 20:24:29: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:29: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-32-00).png    21.09.2025 20:24:32: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:32: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-36-17).png    21.09.2025 20:24:33: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:33: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-38-10).png    21.09.2025 20:24:34: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:34: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-41-20).png    21.09.2025 20:24:35: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:35: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-44-07).png    21.09.2025 20:24:36: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:36: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-47-13).png    21.09.2025 20:24:38: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:38: Starting composition “Assembling Trent XWB”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\Assembling Trent XWB (0-02-52-00).png    21.09.2025 20:24:40: Finished composition “Assembling Trent XWB”.
-
-
-  21.09.2025 20:24:40: Starting composition “UltraFan Overview”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\UltraFan Overview (0-00-44-36).png    21.09.2025 20:24:41: Finished composition “UltraFan Overview”.
-
-
-  21.09.2025 20:24:41: Starting composition “UltraFan Overview”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\UltraFan Overview (0-00-52-27).png    21.09.2025 20:24:42: Finished composition “UltraFan Overview”.
-
-
-  21.09.2025 20:24:42: Starting composition “UltraFan Overview”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\UltraFan Overview (0-01-16-37).png    21.09.2025 20:24:44: Finished composition “UltraFan Overview”.
-
-
-  21.09.2025 20:24:44: Starting composition “UltraFan Overview”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\UltraFan Overview (0-01-12-25).png    21.09.2025 20:24:46: Finished composition “UltraFan Overview”.
-
-
-  21.09.2025 20:24:46: Starting composition “UltraFan Overview”.
-
-  Output To: G:\Мой диск\Nvidia\Showreel\Case 02 - Jet Engine\Refs\UltraFan Overview (0-01-24-48).png    21.09.2025 20:24:47: Finished composition “UltraFan Overview”.
-
-
-  Total Time Elapsed: 35 Seconds
-Log closed on 21.09.2025 at 20:24:47
