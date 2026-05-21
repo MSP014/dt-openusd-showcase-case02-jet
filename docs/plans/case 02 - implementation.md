@@ -6,6 +6,13 @@
 
 ---
 
+## ‼ Operational Protocol Addendum
+
+- We communicate in Russian in chat, but all documentation, commits, and code comments must remain in British English!
+- A question is not a command to execute actions: if a message is a question (including forms like `?`, `?!`, `!?`, `?!?!`), answer first and do not run actions until clarified!
+
+---
+
 ## 🧩 EPIC: Research & Pre-production (JET-1)
 
 **Status**: 🔄 In Progress | **Priority**: Medium
