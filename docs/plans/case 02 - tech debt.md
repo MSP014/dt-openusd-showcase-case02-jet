@@ -1,10 +1,10 @@
 # Case 02 Technical Debt
 
-## 1. Нерешённые техдолги
+## 1. Unresolved Technical Debts
 
-_На текущий момент нерешённых техдолгов нет._
+_There are currently no unresolved technical debts._
 
-## 2. Решённые техдолги
+## 2. Resolved Technical Debts
 
 ### [SECURITY] Pip Security Lock (CVE-2026-1703)
 
@@ -21,7 +21,7 @@ _На текущий момент нерешённых техдолгов нет
   - Local check: `pip-compile --version` -> `pip-compile, version 7.5.3`.
   - Upstream check: `pip-tools` latest version available is `7.5.3`.
 
-#### ⏰ Next Check Date
+#### Next Check Date
 
 - **Date:** 2026-06-04
 - **Scope:** Dependency hygiene follow-up (`pip-tools`, `pip-audit`, lock refresh necessity).
