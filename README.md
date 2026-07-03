@@ -104,11 +104,21 @@ To keep this repository lightweight, heavy binary assets (USD Crates, Textures, 
     - *Note: This folder already exists (anchored by `.gitkeep`), so you simply unzip into it.*
     - *Result:* Your local path should look like `assets/_external/usd/my_asset.usd`.
 
+### Local Omniverse Template Reference
+
+`E:\omniverse_kit_app` is a read-only local reference copy of NVIDIA Omniverse
+Kit App Template and the generated `msp.case03.blackwell` test application. It
+may be inspected to understand Omniverse Kit app structure, extension layout,
+build/launch workflow, startup/playback/controller patterns, and future runtime
+viewer architecture. Do not modify this folder, do not treat it as authored Case
+02 content, and do not mix project assets or documentation into it unless
+explicitly instructed.
+
 ## 📜 Technical Stack
 
-- **Python**: 3.11.x
-- **Houdini**: 21.0.596 (PDG, Pyro, Fluid)
-- **Omniverse**: 2024.x (USD, Isaac Sim 5.1)
+- **Python**: 3.11.15
+- **Houdini**: 21.0.729 (PDG, Pyro, Fluid)
+- **Nvidia Omniverse**: 110.1.2
 - **Conda**: Environment isolation (`case02-env`)
 
 ---
