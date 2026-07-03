@@ -115,6 +115,8 @@ To keep this repository lightweight, heavy binary assets (USD Crates, Textures, 
 
 ## 📜 Changelog
 
+- **Week of 6 July, 2026:** Added Omniverse MCP helper tooling and a runtime boundary ADR, then moved the project environment baseline to Python 3.11.x with the dependency lock refreshed.
+- **Week of 25 May, 2026:** Resolved the pip security lock technical debt and refreshed the dependency lock to keep the validation toolchain current.
 - **2026-03-04:** Refined Digital Twin core concept (`main_concept.md`). Formalized strict semantic discipline (no dual encoding), pre-computed VDB cutaway optimization, atomic UI switching, and integrated the Testbed 80 narrative context.
 - **2026-02-02:** Implemented external storage strategy for heavy assets (Git-agnostic).
 - **2026-01-22:** Initial repository bootstrap. Established "Gold Standard" structure (ADRs, Pre-commit, Hybrid Access).
