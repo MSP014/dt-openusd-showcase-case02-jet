@@ -12,7 +12,7 @@
 
 ## 📋 Project Overview
 
-This repository showcases a prototype **Aerospace Propulsion Digital Twin (Level L1)** demonstrating visualisation of internal processes within complex mechanical systems. The case study centres on a jet engine mounted on Testbed 80, presented in dual modes (interactive Assembly and pre-booleaned Cutaway) to reveal thermodynamic and mechanical phenomena in real-time.
+This repository showcases a **High-Fidelity Aerospace Propulsion Digital Twin (Level L1)** built strictly upon the **Sim-to-Real methodology**. It demonstrates the visualisation of internal thermodynamic and mechanical processes within a complex assembly (Testbed 80), proving out operational logic before physical deployment.
 
 **Key Use Case:**
 The digital twin integrates **pre-simulated Houdini caches for each operational regime** (Idle, Takeoff, Cruise, Max Thrust). These simulation states are seamlessly switched within Omniverse based on engine mode, visualising temperature distribution, combustion dynamics, and mechanical stresses. This exemplifies how L1 Digital Twins enable sophisticated engineering data visualisation without requiring real-time physics computation.
@@ -31,11 +31,11 @@ The digital twin integrates **pre-simulated Houdini caches for each operational 
 
 ---
 
-## 🎯 Key Technical Workflows
+## 🎯 Key Technical Workflows (Sim-to-Real Pipeline)
 
-- **Optimized USD Pipelines:** Processing heavy Houdini Pyro/Fluid simulations into lightweight USD payloads for real-time Omniverse playback.
-- **Data-Driven Digital Twin:** Python-based generation of realistic sensor streams (RPM, EGT, Vibration) linked to flight regimes (Idle, Takeoff, Cruise).
-- **Complex Assembly Management:** Leveraging USD Variants and Payloads to structure massive mechanical assemblies (10k+ parts).
+- **Step 1: Geometry Foundation (Complex Assembly Management):** Leveraging USD Variants and Payloads to structure and standardize massive mechanical assemblies (10,000+ parts) for the digital twin.
+- **Step 2: Production Simulation (Optimized USD Pipelines):** Processing heavy Houdini Pyro/Fluid simulations into lightweight USD payloads for real-time Omniverse playback across different operational regimes.
+- **Step 3: Enterprise IoT Integration (Data-Driven Visualisation):** Python-based generation of realistic sensor streams (RPM, EGT, Vibration) synchronised with visual states to monitor the digital twin.
 
 ## 👁️ Visual Proof
 
@@ -89,7 +89,7 @@ The `docs/knowledge_base/` directory contains curated reference materials:
 >
 > - **Houdini (Fabricator):** The procedural "factory" where assets are generated. Source files (`.hip`) are proprietary and **excluded** from this repository.
 > - **USD (Artifact):** The "product" of the factory. These are the optimized files needed to run the Digital Twin in Omniverse.
-> - **Synthetic Data:** Telemetry streams are emulated via Python generators to simulate robust edge cases (e.g., extreme thermal loads) that are rarely captured in real-world data.
+> - **Synthetic Data Generation for Sim-to-Real**: Telemetry streams are emulated via Python generators to simulate robust edge cases (e.g., extreme thermal loads). This generates **high-quality demonstration data** to validate the digital twin's visual response and AI-readiness prior to physical testing.
 
 ### 📦 Asset Hydration
 

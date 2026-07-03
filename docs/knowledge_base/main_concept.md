@@ -121,7 +121,7 @@ Each module has:
 
 - Full photorealistic rendering of engine geometry.
 - Houdini Pyro simulation cache active (flames in combustion, smoke/heat shimmer).
-- State transitions use a **5-frame Cross-Dissolve** on the Pyro Shader layer to ensure visual continuity without affecting static geometry.
+- State transitions use a **10-frame Sequential Fade** on the Pyro Shader layer (5 frames fade to 0 opacity -> VariantSet Swap -> 5 frames fade to full opacity) to ensure visual continuity *without* simultaneous memory loading of two heavy VDB caches.
 
 ### X-Ray Thermal Mode
 
@@ -172,6 +172,7 @@ A Kit-based application assembling the interactive experience.
 - **State Machine:** Listens to Data Provider and drives USD VariantSet swaps.
 - **USD Composition:** Swaps active VariantSets / material bindings based on combined State × View × Visual Mode.
 - **UI:** Viewport-embedded HUD panel (`omni.ui.scene` overlay).
+- **Runtime Boundary:** The Omniverse app is treated as a contract-driven runtime layer, not a workstation-bound scene file. Packaging and portability constraints are governed by [ADR 006: Omniverse Runtime Boundary and Portability](../adr/006-omniverse-runtime-boundary.md).
 
 ---
 
@@ -246,8 +247,9 @@ A Kit-based application assembling the interactive experience.
 
 - [ ] **Atomic Switching:** On any UI input, the system resolves a single, combined VariantSet key. This swap is strictly atomic: it guarantees one coherent USD layout configuration. There are no mixed or undefined states, ensuring scene stability regardless of rapid user inputs.
 - [ ] On View Mode → CLOSE-UP: trigger camera jump to pre-set position for selected module.
-- [ ] On Visual Mode → VELOCITY VECTORS: swap geometry material to `M_Engine_Ghost`.
-- [ ] State transitions: 5-frame Cross-Dissolve on Pyro Shader layer. Concurrently, HUD telemetry values must smoothly lerp over these same frames between the old and new base values to ensure data/graphics synchronicity. Procedural "breathing" noise applies only during a stable state.
+  - [ ] On Visual Mode → VELOCITY VECTORS: swap geometry material to `M_Engine_Ghost`.
+  - [ ] State transitions for Volumetrics (Pyro): Utilize a **10-frame Sequential Fade**. The current VDB fades to complete transparency over 5 frames. Once invisible, the `OperationalState` VariantSet is atomically swapped (unloading the old cache, loading the new). The new VDB then fades in from transparency over 5 frames. This completely eliminates the I/O bottleneck of loading two overlapping VDB sequences.
+  - [ ] HUD telemetry values concurrently lerp over these same transition frames between the old and new base values to ensure data/graphics synchronicity. Procedural "breathing" noise applies only during a stable state.
 
 ### Phase 4: Polish & Delivery
 
@@ -269,7 +271,8 @@ A Kit-based application assembling the interactive experience.
 - All aerodynamic and combustion simulations are **pre-baked in Houdini** into a state matrix.
 - Cached as USD VariantSets (`.vdb` volumes + `BasisCurves` streamlines) — no live sim at runtime.
 - All caches are **looped sequences** — start and end frames are continuity-matched.
-- State transitions use a **5-frame Cross-Dissolve** on the Pyro Shader layer only; static geometry is never touched during transition.
+- State transitions use a **Sequential Fade** (Fade-Out -> Swap -> Fade-In) on the Pyro Shader layer opacity. This is an explicit performance optimization: by driving the volume to 100% transparent *before* triggering the VariantSet swap, we avoid holding two massive `.vdb` sequences in memory/VRAM simultaneously.
+- Static geometry is never touched or faded during this transition.
 - **Why exclude Ignition?** Ignition and Spool-Up are non-looping, transient events. Simulating and caching a one-off 30-second fluid dynamic spool-up sequence requires massive disk I/O for a visual effect that fires only once. Focusing the budget on looping the 4 master sustained states provides overwhelmingly better ROI for the runtime environment.
 
 ### 2. Thermal Map: Absolute Temperature with Adaptive Scale

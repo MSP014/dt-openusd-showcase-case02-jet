@@ -6,6 +6,7 @@ pre-commit
 python-dotenv
 requests
 jira
+msgpack>=1.2.1
 
 # QA & Security
 black

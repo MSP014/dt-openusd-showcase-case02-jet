@@ -3,6 +3,7 @@
 # --- Internal Protocols & Planning (STRICT PRIVACY) ---
 protocols/
 docs/plans/case 02 - implementation.md
+.codex/
 
 # --- Heavy Work Directories (Project Structure) ---
 assets/_external/*
