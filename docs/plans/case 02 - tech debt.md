@@ -2,26 +2,32 @@
 
 ## 1. Unresolved Technical Debts
 
-### [ENVIRONMENT] Python Baseline Migration Review
-
-- **Status:** Open
-- **Severity:** Medium
-- **Description:** Case 02 is currently anchored on Python 3.10.x by ADR 004. This remains aligned with Omniverse Kit's embedded CPython 3.10 runtime, but Python 3.10 reaches end-of-life in October 2026. A baseline migration should be evaluated before the environment becomes stale.
-- **Current Recommendation:** Do not move the main `case02-env` directly to Python 3.12. Evaluate Python 3.11 first, because Houdini 21 targets the CY2025 VFX Reference Platform where Python 3.11.x is the relevant DCC baseline.
-- **Required Checks:**
-  - Create a temporary `case02-env-py311` environment.
-  - Install dependencies from `requirements.txt`.
-  - Run existing tooling smoke tests (`jira_link.py`, `sync_jira.py`, MCP helper compilation).
-  - Validate USD/Houdini/Omniverse-facing scripts once those runtime scripts exist.
-  - Update ADR 004 only after compatibility is proven.
-- **Non-Goal:** Python 3.12 migration is not planned until Omniverse Kit and Houdini integration evidence justifies it.
-
-#### Next Check Date
-
-- **Date:** 2026-08-15
-- **Scope:** Reassess Python baseline after MCP helper adoption and any Phase 3 Omniverse Kit runtime work.
+_There are currently no unresolved technical debts._
 
 ## 2. Resolved Technical Debts
+
+### [ENVIRONMENT] Python Baseline Migration Review
+
+- **Status:** Closed (2026-07-03)
+- **Severity:** Medium
+- **Description:** Case 02 was previously anchored on Python 3.10.x by ADR 004. That baseline aligned with Omniverse Kit's embedded CPython 3.10 runtime, but Python 3.10 reaches end-of-life in October 2026. A baseline migration was required before the project environment became stale.
+- **Resolution:** Adopted Python 3.11.x as the Case 02 baseline in ADR 004 after validating the current toolchain in a temporary Python 3.11 environment.
+- **Resolution Actions (2026-07-03):**
+  - Created a temporary Python 3.11 environment.
+  - Verified that the Python 3.10 lock file is not directly installable on Python 3.11.
+  - Re-resolved dependencies from `requirements.in` under Python 3.11.
+  - Updated the canonical local `case02-env` environment to Python 3.11.15.
+  - Ran tooling, QA, MCP, and Jira smoke checks under Python 3.11.
+
+#### Evidence
+
+- Local check: `python --version` -> `Python 3.11.15`.
+- Static checks: `py_compile`, `black --check --no-cache`, `isort --check-only`, `flake8`, and `bandit` passed for the current tool scripts.
+- Test check: `pytest` passed.
+- Dependency check: `pip-audit` passed.
+- Runtime helper checks: USD, Kit, and OmniUI MCP `list-tools` commands passed.
+- Jira checks: `jira_link.py list` and `sync_jira.py` dry-run passed.
+- Hook check: `pre-commit run --all-files` passed on the canonical `case02-env` environment.
 
 ### [SECURITY] Pip Security Lock (CVE-2026-1703)
 

@@ -18,7 +18,7 @@ and knowledge-base entries while building the Case 02 Omniverse runtime layer.
   - USD Code MCP on `localhost:9903`;
   - Kit MCP on `localhost:9902`;
   - OmniUI MCP on `localhost:9901`.
-- Python 3.10+ through the project `case02-env` environment.
+- Python 3.11.x through the project `case02-env` environment.
 - `KIT_USD_AGENTS_ROOT` pointing to a local clone of
   `NVIDIA-Omniverse/kit-usd-agents`.
 - Required credentials configured in the local environment used by

@@ -106,7 +106,7 @@ To keep this repository lightweight, heavy binary assets (USD Crates, Textures, 
 
 ## 📜 Technical Stack
 
-- **Python**: 3.10+
+- **Python**: 3.11.x
 - **Houdini**: 21.0.596 (PDG, Pyro, Fluid)
 - **Omniverse**: 2024.x (USD, Isaac Sim 5.1)
 - **Conda**: Environment isolation (`case02-env`)

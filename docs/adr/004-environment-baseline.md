@@ -14,8 +14,8 @@ We anchor all Case 02 environments on a specific Python baseline:
 
 ### 1. Python Version
 
-* **Baseline**: **Python 3.10.x** (specifically 3.10.12+).
-* **Rationale**: This version provides the best stability for current NVIDIA Omniverse Kit extensions and SideFX Houdini (20.x+) Python 3 builds.
+* **Baseline**: **Python 3.11.x** (specifically 3.11.15+).
+* **Rationale**: This version aligns Case 02 with the CY2025 VFX Reference Platform used by Houdini 21 while keeping the local Omniverse helper tooling compatible. The Omniverse Kit runtime may still embed its own Python interpreter; project-side tooling remains isolated in the `case02-env` conda environment.
 
 ### 2. Base Configuration
 
@@ -24,5 +24,5 @@ We anchor all Case 02 environments on a specific Python baseline:
 
 ## Consequences
 
-* **Positive**: Minimises "syntax error" or "library not found" issues during cross-case development.
-* **Negative**: Requires reinstalling environments if they were built on 3.11+ or 3.9-.
+* **Positive**: Keeps the project environment aligned with the active DCC baseline and avoids carrying Python 3.10 past its support window.
+* **Negative**: Requires regenerating the lock file under Python 3.11 and rebuilding environments that were created on Python 3.10 or older.
