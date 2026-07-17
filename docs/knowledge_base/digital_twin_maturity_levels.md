@@ -106,45 +106,50 @@
 105:
 106: ## Case 02 (Jet Engine) — Classification Justification
 107:
-108: **Classified Level:** **L1 (Informative / Connected)** (with elements of L2/L3 simulation visualization)
-109:
-110: ### Scenario
-111:
-112: A cutaway view of a **Rolls-Royce Trent 1000** jet engine on Testbed 80. The digital twin visualises internal physical processes that are otherwise invisible: thermodynamics (temperature gradients), fluid dynamics (airflow), and mechanical stress.
-113:
-114: ### L1 Characteristics Present
-115:
-116: - ✅ **Data Visualization:** Displays complex internal states (pressure, temperature, RPM) via FUI.
-117: - ✅ **Reflecting the Real:** The visual model updates to match the engine's operating regime (Idle, Take-off, Cruise, Max).
-118: - ✅ **Monitoring:** "X-Ray" vision allows engineers to see inside the running engine.
-119: - ✅ **Primary function:** Answers "What is the thermodynamic state of the core right now?"
-120:
-121: ### Why Not L0?
-122:
-123: It connects "live" (simulated) data streams to visual properties. It is not just a static model; the airflow and heat maps react to the Throttle Lever Angle.
-124:
-125: ### Why Not Full L2?
-126:
-127: While it supports decision-making (Engine Health Monitoring), the primary goal of this Showreel case is the **high-fidelity visualization of complex scientific data (CFD/Houdini caches)** rather than the control loop itself.
-128:
-129: ---
-130:
-131: ## Project Focus Areas
-132:
-133: 1. **Scientific Visualization:** Translating heavy Houdini Pyro/FEM simulations into real-time Omniverse assets (Volume/Flow).
-134: 2. **X-Ray Aesthetics:** Developing shaders that reveal internal structure without losing form definition.
-135: 3. **FUI Integration:** Displaying engineering telemetry (EGT, N1/N2/N3) in 3D space.
-136:
-137: ---
-138:
-139: ## References
-140:
-141: 1. Tao et al. — Digital Twin Maturity Framework
-142: 2. [Digital Twin Atlas](https://digital-twin-atlas.com/)
-143: 3. Rolls-Royce "IntelligentEngine" vision
-144:
-145: ---
-146:
-147: **Document Status:** Knowledge Base Entry
-148: **Last Updated:** 2026-02-01
-149: **Maintained by:** Miles (Case 02 Assistant)
+108: **Target Maturity:** **L1 (Informative / Connected)**
+109: **Current Status:** **L1-oriented prototype using synthetic telemetry; operationally L0 until connected to validated real-time asset data.**
+110:
+111: ### Scenario
+112:
+113: A cutaway visualisation of a Trent 1000-class jet engine in a Testbed 80-inspired context. The prototype communicates qualitative flow, thermal, combustion, and component-state behaviour through Houdini-authored caches and synthetic telemetry.
+114:
+115: ### L1-Oriented Capabilities Demonstrated
+116:
+117: - **Data visualisation:** Displays scenario-driven pressure, temperature, and RPM values through the FUI.
+118: - **State reflection pattern:** Updates the visual model for the selected Idle, Takeoff, Cruise, or Max Thrust scenario.
+119: - **Inspection UX:** Uses cutaway, thermal, and flow-vector modes to communicate otherwise hidden component relationships.
+120: - **Provider contract:** Separates telemetry input from the USD and Omniverse visualisation layers so a validated source can be integrated later.
+121:
+122: ### Why More Than Static Geometry?
+123:
+124: Synthetic scenario streams drive visual properties, state selection, airflow cues, and heat maps. This validates the interaction and data-binding pipeline, not the condition of a real engine.
+125:
+126: ### Why Not Yet Operational L1?
+127:
+128: The current project does not ingest validated real-time sensor data from a physical engine or test cell. It therefore demonstrates the intended L1 workflow without claiming an operational digital connection.
+129:
+130: ### Why Not L2 or L3?
+131:
+132: The prototype does not control a physical asset, support operational decisions, or predict future engine performance.
+133:
+134: ---
+135:
+136: ## Project Focus Areas
+137:
+138: 1. **Engineering Visualisation:** Translating Houdini-authored flow, thermal, and combustion caches into real-time Omniverse assets.
+139: 2. **X-Ray Aesthetics:** Developing shaders that reveal internal structure without losing form definition.
+140: 3. **FUI Integration:** Displaying synthetic scenario telemetry (EGT, N1/N2/N3) in 3D space.
+141:
+142: ---
+143:
+144: ## References
+145:
+146: 1. Tao et al. — Digital Twin Maturity Framework
+147: 2. [Digital Twin Atlas](https://digital-twin-atlas.com/)
+148: 3. Rolls-Royce "IntelligentEngine" vision
+149:
+150: ---
+151:
+152: **Document Status:** Knowledge Base Entry
+153: **Last Updated:** 2026-07-17
+154: **Maintained by:** Case 02 project

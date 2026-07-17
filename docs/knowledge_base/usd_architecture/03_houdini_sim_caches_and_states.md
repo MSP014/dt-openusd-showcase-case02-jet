@@ -1,6 +1,10 @@
 # Guideline 03: Houdini Simulation Caches and States
 
-A static jet engine is just a CAD model. To achieve the "Digital Twin" capability (Case 02), we must integrate heavy Houdini simulation caches (VDB volumes, geometry sequences) representing physical phenomena (thermodynamics, fluid flow).
+A static jet engine is just a CAD model. To demonstrate the state-driven digital
+twin visualisation workflow, Case 02 integrates Houdini-authored caches (VDB
+volumes and geometry sequences) that qualitatively represent thermal,
+combustion, and flow behaviour. These caches are visual communication assets,
+not validated engineering simulation results.
 
 These caches must switch dynamically based on the 4 engine regimes:
 

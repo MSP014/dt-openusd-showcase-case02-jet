@@ -1,33 +1,54 @@
-# Jet Engine Digital Twin (Case 02) — Knowledge Base Index
+# Jet Engine Digital Twin (Case 02) - Knowledge Base
 
- Welcome to the central Knowledge Base for the **Trent 1000 Jet Engine Digital Twin** project. This directory contains all foundational concepts, engineering specifications, and architectural documentation necessary to implement the real-time Omniverse application.
+This directory is the durable knowledge base for Case 02. It separates authored
+project contracts from raw or source-specific material so the README, scope,
+architecture, validation boundary, and public claims do not drift every time a
+useful source appears.
 
- ---
+## Authoritative Project Documents
 
-## 📂 Core Concepts & Architecture
+| Document | Purpose |
+| :--- | :--- |
+| [Main Concept](main_concept.md) | Canonical product and experience specification: operational states, visual modes, LOD strategy, telemetry role, and semantic contracts. |
+| [Validation and Limitations](validation_and_limitations.md) | Claim boundary for what the prototype validates, what it does not claim, and which evidence should be produced. |
+| [Reference Geometry and Provenance](reference_geometry_and_provenance.md) | Rules for public-reference geometry, scale anchors, provenance, visual proxy assumptions, and non-claims. |
+| [Pipeline Workflow](pipeline_workflow.md) | Source-agnostic production chain from public references through Houdini, USD composition, telemetry binding, Omniverse playback, and visual proof export. |
+| [Digital Twin Maturity Levels](digital_twin_maturity_levels.md) | Theoretical framing for the maturity level Case 02 can reasonably demonstrate. |
 
- | Document | Description |
- | :--- | :--- |
- | [**Main Concept**](main_concept.md) | The definitive guide to the project. Covers the Operational States, Visual Modes (Thermal/Velocity), LOD strategies, and the strict semantic contracts that guide the application engineering. |
- | [**Digital Twin Maturity Levels**](digital_twin_maturity_levels.md) | Theoretical framework contextualizing this project within the broader spectrum of Digital Twin evolution (from static models to autonomous, AI-driven systems). |
- | [**USD Architecture: Contract**](usd_architecture/00_project_usd_contract.md) | The definitive naming conventions, units, and structural principles for the USD scene graph assembly. |
- | [**USD Architecture: Payloads & References**](usd_architecture/01_payloads_references_assembly.md) | Documentation on how to compose the heavy engine geometry without breaking viewport performance, defining the boundaries for Close-Up Payload loading. |
- | [**USD Architecture: Instancing & Radial Geometry**](usd_architecture/02_instancing_radial_geometry.md) | Strategies for efficiently instancing repeating radial components (like compressor/turbine blades) using PointInstancers to drastically reduce the prim count. |
- | [**USD Architecture: Houdini Sim Caches & States**](usd_architecture/03_houdini_sim_caches_and_states.md) | The technical layout of the 4-state simulation matrix, covering how `OperationalState` and `VisualMode` VariantSets are wired to VDB grids and BasisCurves. |
- | [**USD Architecture: Custom Attributes & Telemetry**](usd_architecture/04_custom_attributes_telemetry.md) | Technical specs on how to embed schema parameters (like target temperatures or component metadata) directly into USD prims for the Data Provider to bind to. |
+## USD Architecture Contracts
 
-## ⚙️ Engineering & Physics Reference
+| Document | Purpose |
+| :--- | :--- |
+| [Project USD Contract](usd_architecture/00_project_usd_contract.md) | Naming conventions, units, and structural principles for the USD scene graph assembly. |
+| [Payloads and References](usd_architecture/01_payloads_references_assembly.md) | Composition rules for heavy engine geometry and close-up payload loading. |
+| [Instancing and Radial Geometry](usd_architecture/02_instancing_radial_geometry.md) | PointInstancer strategy for repeated radial components such as compressor and turbine blades. |
+| [Houdini Simulation Caches and States](usd_architecture/03_houdini_sim_caches_and_states.md) | Technical layout of the operational state and visual mode VariantSets. |
+| [Custom Attributes and Telemetry](usd_architecture/04_custom_attributes_telemetry.md) | Schema parameters and USD attributes consumed by the telemetry/data provider layer. |
 
- | Document | Description |
- | :--- | :--- |
- | [**Engine Technical Specifications**](Trent%201000%20-%20Engine%20Technical%20Specifications.md) | Baseline physical data for the Trent 1000 turbofan (dimensions, thrust, spool RPM ranges). |
- | [**Testbed 80 Facility Details**](Testbed_80_Facility_Details.md) | Scale and technical capabilities of the Rolls-Royce indoor testing facility, providing the narrative and physical context for our simulation environment. |
- | [**FUI and HUD Data Mapping**](FUI%20and%20HUD.txt) | Raw schema definitions for the telemetry values exposed to the UI (N1/N2/N3 RPM, EGT, Fuel Flow, etc.). |
+## Reference Material
 
-## 💬 Transcripts & Research Logs
+[`reference_material/`](reference_material/) stores external or source-like
+materials used to ground scale, facility context, telemetry labels, and digital
+twin terminology. These files are inputs, not project contracts by themselves.
 
- | Directory | Description |
- | :--- | :--- |
- | [`transcripts/`](transcripts/) | Raw transcripts and research logs from subject matter experts, used to inform the documentation in this root folder. |
+| Material | Use |
+| :--- | :--- |
+| [Engine Technical Specifications](reference_material/Trent%201000%20-%20Engine%20Technical%20Specifications.md) | Baseline public physical data for dimensions, thrust, and spool ranges. |
+| [Testbed 80 Facility Details](reference_material/Testbed_80_Facility_Details.md) | Facility scale and narrative context for the test-cell environment. |
+| [FUI and HUD Data Mapping](reference_material/FUI%20and%20HUD.txt) | Raw telemetry labels and UI-facing data names. |
+| [Digital Twin Maturity Model PDF](reference_material/digital_twins_a_maturity_model_for_their_classification_and_evaluation.pdf) | Source material behind the maturity-level framing. |
 
- > **Note for Developers & Artists:** Always ensure that any updates to the simulation matrix or the Telemetry Data Provider schema `[in Python]` remain perfectly synchronized with the contracts laid out in the `main_concept.md` document. No dual-encoding of visual states!
+## Research Intake
+
+| Directory or Register | Purpose |
+| :--- | :--- |
+| [research_notes/](research_notes/) | Source-specific notes kept behind an intake gate before they affect project scope, architecture, claims, or README text. |
+| [Source Influence Register](research_notes/source_influence_register.md) | Canonical register of which external sources influenced Case 02 and what was taken, excluded, or parked. |
+| [transcripts/](transcripts/) | Raw transcripts and research logs used as supporting context. |
+
+## Update Rule
+
+Keep the simulation matrix and telemetry-facing contracts synchronised with
+[Main Concept](main_concept.md) and the relevant USD architecture contract. Do
+not create parallel matrix or schema documents unless the project deliberately
+extracts them into a single new canonical contract.

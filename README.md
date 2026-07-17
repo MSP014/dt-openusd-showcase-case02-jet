@@ -5,37 +5,72 @@
 
 ---
 
-> **Role:** L1 Digital Twin (Mechanical Engineering)
+> **Role:** L1-Oriented Digital Twin Visualisation Prototype (Mechanical Engineering)
 > **Stack:** Houdini 21.0.596 (Sim/PDG), Omniverse 2024.x (USD/Python), Isaac Sim, Jira Integration
 
 ---
 
 ## 📋 Project Overview
 
-This repository showcases a **High-Fidelity Aerospace Propulsion Digital Twin (Level L1)** built strictly upon the **Sim-to-Real methodology**. It demonstrates the visualisation of internal thermodynamic and mechanical processes within a complex assembly (Testbed 80), proving out operational logic before physical deployment.
+This repository showcases a portfolio-grade aerospace propulsion digital twin
+visualisation prototype targeting an L1 informative workflow. It demonstrates
+state-driven representations of qualitative flow, thermal, combustion, and
+component behaviour within a complex assembly and Testbed 80 context, without
+claiming predictive engine physics.
 
 **Key Use Case:**
-The digital twin integrates **pre-simulated Houdini caches for each operational regime** (Idle, Takeoff, Cruise, Max Thrust). These simulation states are seamlessly switched within Omniverse based on engine mode, visualising temperature distribution, combustion dynamics, and mechanical stresses. This exemplifies how L1 Digital Twins enable sophisticated engineering data visualisation without requiring real-time physics computation.
+The prototype integrates **pre-baked Houdini caches for each operational regime**
+(Idle, Takeoff, Cruise, Max Thrust). These states are switched within Omniverse
+to communicate qualitative flow direction, thermal zones, combustion states,
+and component relationships. This demonstrates an L1-oriented visualisation
+workflow without live physics or predictive propulsion modelling.
 
 **Project Focus:**
 
 - **Complex Assembly Management:** Handling 10,000+ parts using USD Variants and Payloads
-- **Simulation Pipeline:** Houdini Pyro/Fluid simulations optimised into lightweight USD caches
+- **Simulation Pipeline:** Houdini-authored flow and thermal visualisation caches optimised into lightweight USD assets
 - **Data-Driven Visualisation:** Python-based sensor streams (RPM, EGT, Vibration) synchronised with visual states
+
+## What This Case Proves
+
+- Complex aerospace assembly management through USD Payloads, VariantSets, and
+  module-level scene organisation.
+- Pre-baked Houdini simulation states structured for real-time Omniverse
+  playback.
+- Synthetic telemetry binding for RPM, EGT, vibration, fuel flow, thrust, and
+  engine state visualisation.
+- Clear separation between public-reference geometry, external simulation
+  caches, runtime HUD logic, and project claim boundaries.
+
+## Scope & Limitations
+
+Case 02 is a portfolio-grade, L1-oriented digital twin visualisation prototype.
+Its Houdini-authored, pre-baked flow and thermal caches are physically inspired
+representations for engineering communication and state-driven demonstration,
+not validated CFD results.
+
+The project does not claim predictive aerodynamic accuracy, certification
+suitability, real Trent 1000 telemetry, or proprietary engine geometry.
+Validation covers pipeline behaviour, USD composition, state switching,
+telemetry binding, and visual consistency rather than real-engine gas dynamics.
+
+See [Validation and Limitations](docs/knowledge_base/validation_and_limitations.md)
+and [Reference Geometry and Provenance](docs/knowledge_base/reference_geometry_and_provenance.md)
+for the full claim boundary.
 
 > **Deep Dive:**
 >
 > - [Rolls-Royce Factory Tour Transcript](./docs/knowledge_base/transcripts/Flightradar24%20-%202026.01.30%20-%20How%20Rolls-Royce%20Jet%20Engines%20Are%20Built.md)
-> - [Testbed 80 Technical Specifications](./docs/knowledge_base/Testbed_80_Facility_Details.md)
-> - [FUI and HUD Design Notes](./docs/knowledge_base/FUI%20and%20HUD.txt)
+> - [Testbed 80 Technical Specifications](./docs/knowledge_base/reference_material/Testbed_80_Facility_Details.md)
+> - [FUI and HUD Design Notes](./docs/knowledge_base/reference_material/FUI%20and%20HUD.txt)
 
 ---
 
-## 🎯 Key Technical Workflows (Sim-to-Real Pipeline)
+## 🎯 Key Technical Workflows (Visualisation Pipeline)
 
 - **Step 1: Geometry Foundation (Complex Assembly Management):** Leveraging USD Variants and Payloads to structure and standardize massive mechanical assemblies (10,000+ parts) for the digital twin.
-- **Step 2: Production Simulation (Optimized USD Pipelines):** Processing heavy Houdini Pyro/Fluid simulations into lightweight USD payloads for real-time Omniverse playback across different operational regimes.
-- **Step 3: Enterprise IoT Integration (Data-Driven Visualisation):** Python-based generation of realistic sensor streams (RPM, EGT, Vibration) synchronised with visual states to monitor the digital twin.
+- **Step 2: Production Simulation (Optimised USD Pipelines):** Processing Houdini-authored flow and thermal caches into lightweight USD payloads for real-time Omniverse playback across different operational regimes.
+- **Step 3: Synthetic Telemetry Integration (Data-Driven Visualisation):** Generating scenario-based RPM, EGT, and vibration streams in Python and binding them to visual states.
 
 ## 👁️ Visual Proof
 
@@ -43,7 +78,7 @@ The digital twin integrates **pre-simulated Houdini caches for each operational 
 
 1. **Engine Idle State:** `![Idle Demo](docs/img/idle_demo.gif)`
 2. **Telemetry Dashboard:** `![FUI Demo](docs/img/fui_demo.gif)`
-3. **Pipeline Flow:** `![Data Flow](docs/img/pipeline_diagram.png)`
+3. **Pipeline Flow:** [Pipeline Diagram](docs/img/pipeline_diagram.md)
 
 ## 🏗️ Architecture & Decisions
 
@@ -76,8 +111,8 @@ The `docs/knowledge_base/` directory contains curated reference materials:
 
 - **[Knowledge Base Index](docs/knowledge_base/README.md)**: Central directory for all concepts, technical specs, and USD architecture rules.
 - **[Flightradar24 Factory Tour Transcript](docs/knowledge_base/transcripts/Flightradar24%20-%202026.01.30%20-%20How%20Rolls-Royce%20Jet%20Engines%20Are%20Built.md)**: Technical specifications (Trent 1000), sourced from Andy Dawkins (GM, Engine Overhaul Services) and Paul Flint (Chief of Capability Programs)
-- **[Testbed 80 Specifications](docs/knowledge_base/Testbed_80_Facility_Details.md)**: Facility dimensions, acoustic treatment, structural details
-- **[FUI and HUD Design](docs/knowledge_base/FUI%20and%20HUD.txt)**: Parameters for Heads-Up Display telemetry screens
+- **[Testbed 80 Specifications](docs/knowledge_base/reference_material/Testbed_80_Facility_Details.md)**: Facility dimensions, acoustic treatment, structural details
+- **[FUI and HUD Design](docs/knowledge_base/reference_material/FUI%20and%20HUD.txt)**: Parameters for Heads-Up Display telemetry screens
 
 ---
 
@@ -89,7 +124,7 @@ The `docs/knowledge_base/` directory contains curated reference materials:
 >
 > - **Houdini (Fabricator):** The procedural "factory" where assets are generated. Source files (`.hip`) are proprietary and **excluded** from this repository.
 > - **USD (Artifact):** The "product" of the factory. These are the optimized files needed to run the Digital Twin in Omniverse.
-> - **Synthetic Data Generation for Sim-to-Real**: Telemetry streams are emulated via Python generators to simulate robust edge cases (e.g., extreme thermal loads). This generates **high-quality demonstration data** to validate the digital twin's visual response and AI-readiness prior to physical testing.
+> - **Synthetic Telemetry Generation:** Scenario-based telemetry streams are produced by Python generators to exercise defined operating states and edge cases. They demonstrate the visual response of the prototype and are not measurements from a real engine or evidence of Sim-to-Real validation.
 
 ### 📦 Asset Hydration
 
@@ -117,6 +152,7 @@ explicitly instructed.
 ## 📜 Technical Stack
 
 - **Python**: 3.11.15
+- **OpenUSD Python**: `usd-core==26.5` (`pxr` diagnostics)
 - **Houdini**: 21.0.729 (PDG, Pyro, Fluid)
 - **Nvidia Omniverse**: 110.1.2
 - **Conda**: Environment isolation (`case02-env`)
@@ -125,6 +161,7 @@ explicitly instructed.
 
 ## 📜 Changelog
 
+- **Week of 13 July, 2026:** Added OpenUSD Python diagnostics through `usd-core`, restoring `pxr` access in the Case 02 environment and closing the dependency hygiene gap.
 - **Week of 6 July, 2026:** Added Omniverse MCP helper tooling and a runtime boundary ADR, then moved the project environment baseline to Python 3.11.x with the dependency lock refreshed.
 - **Week of 25 May, 2026:** Resolved the pip security lock technical debt and refreshed the dependency lock to keep the validation toolchain current.
 - **2026-03-04:** Refined Digital Twin core concept (`main_concept.md`). Formalized strict semantic discipline (no dual encoding), pre-computed VDB cutaway optimization, atomic UI switching, and integrated the Testbed 80 narrative context.

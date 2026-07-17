@@ -1,28 +1,33 @@
 # Case 02: Jet Engine Digital Twin (Trent 1000) — Main Concept
 
-> **Philosophy:** "Engineering in Motion" — A data-driven, real-time Digital Twin of a Rolls-Royce Trent 1000 turbofan engine, running on Testbed 80, demonstrating the full spectrum of operational states through physically-grounded simulation and interactive visualisation.
+> **Philosophy:** "Engineering in Motion" - A data-driven, interactive, L1-oriented digital twin visualisation prototype for a Trent 1000-class turbofan engine in a Testbed 80-inspired context, demonstrating predefined operating regimes through physically inspired, state-driven representations.
 
 ---
 
 ## 1. High-Level Concept
 
 **Project:** Autonomous NVIDIA Omniverse Kit Application.
-**Mission:** Visualise the internal thermo-aerodynamic lifecycle of a Trent 1000 engine across four operational states — from standby to maximum thrust — through seamlessly switchable photorealistic, thermal, and flow-vector modes.
-**Narrative Context:** The engine is situated on **Testbed 80** (see [Testbed 80 Facility Details](Testbed_80_Facility_Details.md)). The testbed is not mere decoration; it provides the essential physical context (sensor points, readouts, and physical mounts) that justifies the existence of the telemetry dashboard and grounds the UX in engineering reality.
-**Engineering Logic:** A single pre-baked simulation matrix (4 states × looping USD VariantSets) drives all visual layers, with zero live computation at runtime.
+**Mission:** Communicate qualitative internal flow, thermal, combustion, and component-state behaviour across four operational states - from standby to maximum thrust - through seamlessly switchable photorealistic, thermal, and flow-vector modes.
+**Narrative Context:** The engine is presented in a **Testbed 80-inspired** environment (see [Testbed 80 Facility Details](reference_material/Testbed_80_Facility_Details.md)). The testbed reference provides useful physical context for sensor points, readouts, and mounting structures without implying an exact digital replica of the real facility.
+**Engineering Logic:** A single pre-baked visualisation matrix (4 states x looping USD VariantSets) drives all visual layers, with zero live physics computation at runtime.
 
 ---
 
 ## 2. Operational States (Simulation Matrix)
 
-All states are **pre-baked in Houdini (Solaris/PDG)** and looped as USD VariantSets. Each state has a distinct aerodynamic and thermal signature.
+This document is the current source of truth for the Case 02 operational matrix:
+engine regime, view mode, visual mode, and module selection. Do not create a
+competing matrix document unless the matrix is deliberately extracted into a
+single dedicated contract and linked back here.
+
+All states are **pre-baked in Houdini (Solaris/PDG)** and looped as USD VariantSets. Each state has a distinct qualitative flow and thermal visual signature.
 
 | State | Throttle | Description | Visual Signature |
 | :--- | :--- | :--- | :--- |
-| **Idle** | ~5% | Ground standby / Testbed 80 warm-up | Low RPM, laminar flow, cool exhaust |
-| **Takeoff** | 100% | Peak thrust demand | Max RPM all 3 spools, high-velocity jets, intense exhaust plume |
-| **Cruise** | ~85% | Sustained efficiency envelope | Stable, efficient flow; exhaust moderate |
-| **Max Thrust** | Max | Testbed stress condition | Turbulent compressor zones, extreme exhaust temps, max bypass velocity |
+| **Idle** | ~5% | Ground standby / testbed warm-up | Low rotational speed, smooth low-velocity flow cues, cool exhaust |
+| **Takeoff** | 100% | Peak thrust scenario | Highest nominal spool speeds, high-velocity flow cues, intense exhaust plume |
+| **Cruise** | ~85% | Sustained cruise scenario | Stable flow cues and moderate exhaust |
+| **Max Thrust** | Max | Maximum-output demonstration | Pronounced turbulence cues, hottest exhaust representation, maximum bypass-flow visual intensity |
 
 > **Note on Looping & Exclusions:** All simulation caches are engineered as seamlessly looping sequences. The "Ignition/Spool-Up" state is explicitly excluded (see §6.1 for engineering justification).
 
@@ -65,17 +70,17 @@ The engine is displayed at a distance sufficient for the full assembly to fit wi
 **CUTAWAY Sub-Mode:**
 
 - **Geometry Zoning:** Engine topology is authored with explicit, hardcoded zone partitions (e.g., `grp_fan`, `grp_hp_compressor`, `grp_combustor`) in the USD scene graph. These explicit partitions dictate geometry load/unload (Payloads), material assignments, and act as the targets for telemetry data binding.
-- Pre-booleaned cutaway geometry (`engine_cutaway.usd`) bisects the engine along its longitudinal axis, guaranteeing rendering stability (no artifacts on complex volumetric or refractive boundaries) while exposing all internal zones. Real-time dynamic clipping planes are explicitly disallowed.
+- Pre-booleaned cutaway geometry (`engine_cutaway.usd`) bisects the engine along its longitudinal axis, improving rendering stability on complex volumetric or refractive boundaries while exposing all internal zones. Real-time dynamic clipping planes are explicitly disallowed.
 - The Houdini simulation cache plays back in full — internal flow, rotating stages, combustion Pyro.
-- **Thermal Map:** Global absolute temperature scale spanning the full engine thermal range (~50 °C → ~2,000 °C). The fan intake end of the scale reads blue; the exhaust reads deep red. The scale is fixed and consistent across operational states — only the intensity distribution changes as states change.
+- **Thermal Map:** A fixed, illustrative temperature scale (~50 °C to ~2,000 °C) maps the fan intake to blue and the exhaust to deep red. State-driven synthetic values change the intensity distribution; the map does not claim an exact engine temperature field.
 - **Velocity Vectors:** Internal primary (hot-section) and bypass (cold-section) streamlines are visualised. See §4 for the Ghost Material specification.
 
 **ASSEMBLY Sub-Mode (Context & Scale):**
 
-- The engine is shown in its complete, uncut exterior state (`engine_assembly.usd`) — exactly as it appears mounted on **Testbed 80** in Derby.
+- The engine is shown in its complete, uncut exterior state (`engine_assembly.usd`) within a **Testbed 80-inspired** presentation context.
 - **Camera Interactivity:** Unlike the fixed orthographic feel of the Cutaway, this mode acts as an interactive "Viewing Gallery". The user can explore the full scale of the engine and the test cell environment either via multiple pre-set camera angles (e.g., *Control Room View*, *Pylon Mount*, *Exhaust View*) or via a constrained Free-Fly camera.
 - The same Houdini simulation cache is used, but the external casing remains fully opaque in Normal mode.
-- **Thermal Map:** Axial temperature gradient along the engine's exterior, representing the temperature of the gas stream within. Cold (blue) at the intake, hot (red/orange) at the exhaust nozzle. The exhaust temperature and plume intensity increase progressively from Idle to Max Thrust.
+- **Thermal Map:** A qualitative axial heat gradient runs from cold colours at the intake to hot colours at the exhaust nozzle. Synthetic state values increase the displayed heat and plume intensity from Idle to Max Thrust.
 - **Velocity Vectors:** Streamlines of the exhaust plume extending behind the nozzle, plus the bypass airflow along the nacelle exterior. See §4 for the Ghost Material specification.
 
 ---
@@ -92,9 +97,9 @@ Each module has:
 
 - A dedicated pre-set camera position in Omniverse.
 - A dedicated HUD panel with component-specific telemetry (RPM, local temps, pressures).
-- **Thermal Map:** The colour scale is **recalibrated per-module** to that module's specific physical temperature range. This maximises visual contrast and physical accuracy at each zoom level:
+- **Thermal Map:** The colour scale is **recalibrated per-module** to an illustrative, reference-informed temperature range. This maximises visual contrast without claiming physical accuracy at each zoom level:
 
-| Module | Approximate Thermal Range |
+| Module | Illustrative Thermal Range |
 | :--- | :--- |
 | Fan | 50 °C – 300 °C |
 | IP Compressor | 200 °C – 600 °C |
@@ -129,7 +134,7 @@ Each module has:
 - Pyro smoke/flame hidden.
 - Thermal heatmap projected onto geometry via per-component colour Primvars.
 - **External View:** Global scale (~50 °C → ~2,000 °C), fixed across states.
-- **Close-Up:** Per-module adaptive scale; recalibrates min/max to the module's physical range.
+- **Close-Up:** Per-module adaptive scale; recalibrates min/max to an illustrative, reference-informed range.
 - Dense metric HUD overlays are simplified in Close-Up X-Ray to avoid clutter — only the temperature colour-scale legend is shown.
 
 ### Velocity Vectors (Streamlines)
@@ -151,7 +156,7 @@ Each module has:
 A Python module (`src/data_provider`) acting as the "Single Source of Truth" for all telemetry values.
 
 - **Demo Mode (default):** Generates procedural sine-wave/noise data keyed to the selected Operational State enum. This is the standard mode for the showreel.
-- **Live Mode (upgrade path):** Exposes `get_telemetry() -> dict` accepting normalised float payloads. Real hardware feeds (HWiNFO64, Prometheus/Grafana, MQTT, Kafka) can be hot-swapped in with **zero changes to the visualisation layer**.
+- **Live Mode (upgrade path):** Exposes `get_telemetry() -> dict` accepting normalised float payloads. A real data source could be integrated behind this provider contract, subject to schema mapping, calibration, validation, and operational constraints.
 - **Output:** The provider must generate and return *all* these synchronised values: `n1_rpm`, `n2_rpm`, `n3_rpm`, `egt_c`, `fuel_flow_kg_s`, `thrust_kn`, `oil_press_psi`, `oil_temp_c`, `vibration_ips`, `oat_c`.
 
 ### Layer 2: Simulation Core (The Factory)
@@ -195,12 +200,12 @@ A Kit-based application assembling the interactive experience.
 
 #### 1.2 Simulation Setup (Dynamic)
 
-- [ ] **CFD / Fluid Sim:** Primary and bypass flow VDB sim.
+- [ ] **Flow Visualisation:** Primary and bypass flow VDB caches.
   - Input: Engine collision geometry.
-  - States: Idle (laminar, low velocity) / Takeoff (max velocity, max turbulence) / Cruise (steady) / Max Thrust (turbulent, high rejection).
-- [ ] **Exhaust Plume Sim:** Separate VDB for external assembly view.
-- [ ] **Vector Field Gen:** Convert VDB velocity fields to `BasisCurves` (streamlines), colour-coded by velocity magnitude.
-- [ ] **Thermal Map Gen:** Generate per-component vertex colour Primvars for heatmap overlay.
+  - States: Idle (smooth, low-velocity cues) / Takeoff (high-velocity, energetic cues) / Cruise (steady cues) / Max Thrust (pronounced turbulence cues).
+- [ ] **Exhaust Plume Visualisation:** Separate VDB for external assembly view.
+- [ ] **Vector Field Gen:** Convert VDB velocity fields to `BasisCurves` (streamlines), colour-coded by relative velocity magnitude.
+- [ ] **Thermal Map Gen:** Generate per-component vertex colour Primvars for a state-driven synthetic heatmap overlay.
 
 #### 1.3 Caching & Export
 
@@ -268,24 +273,24 @@ A Kit-based application assembling the interactive experience.
 
 ## Implementation Notes (for future me)
 
-> This section collects the "how we fake it" decisions so the concept sections above stay focused on *what we show*. Nothing here changes the vision; it is purely mechanics.
-> **Why synthetic data?** We have no live engine telemetry feed. All parameters — RPM, EGT, fuel flow, thrust — are procedurally generated by the Data Provider in Demo Mode. The goal is to demonstrate a Digital Twin *concept* and prove technical artist competency: the ability to design and implement a convincing, data-driven, procedurally animated real-time visualisation. The system is architected such that real telemetry (OPC-UA from a test cell ACARS feed, or any HTTP/MQTT stream) can be connected with zero changes to the visualisation layer.
+> This section records representation and data-boundary decisions so the concept sections above stay focused on *what we show*. Nothing here changes the vision; it describes implementation mechanics.
+> **Why synthetic data?** We have no live engine telemetry feed. All parameters - RPM, EGT, fuel flow, thrust - are procedurally generated by the Data Provider in Demo Mode. The goal is to demonstrate an L1-oriented digital twin visualisation concept and technical-art pipeline competency. A real telemetry source could later be integrated through the provider contract, but would require schema mapping, calibration, validation, and operational review.
 
 ### 1. Pyro: State Caches + Transition Logic
 
-- All aerodynamic and combustion simulations are **pre-baked in Houdini** into a state matrix.
+- All flow and combustion visualisation caches are **pre-baked in Houdini** into a state matrix.
 - Cached as USD VariantSets (`.vdb` volumes + `BasisCurves` streamlines) — no live sim at runtime.
 - All caches are **looped sequences** — start and end frames are continuity-matched.
 - State transitions use a **Sequential Fade** (Fade-Out -> Swap -> Fade-In) on the Pyro Shader layer opacity. This is an explicit performance optimization: by driving the volume to 100% transparent *before* triggering the VariantSet swap, we avoid holding two massive `.vdb` sequences in memory/VRAM simultaneously.
 - Static geometry is never touched or faded during this transition.
-- **Why exclude Ignition?** Ignition and Spool-Up are non-looping, transient events. Simulating and caching a one-off 30-second fluid dynamic spool-up sequence requires massive disk I/O for a visual effect that fires only once. Focusing the budget on looping the 4 master sustained states provides overwhelmingly better ROI for the runtime environment.
+- **Why exclude Ignition?** Ignition and Spool-Up are non-looping, transient events. Authoring and caching a one-off 30-second spool-up visualisation requires substantial disk I/O for an effect that plays only once. Focusing the budget on looping the 4 master sustained states provides better value for the runtime experience.
 
-### 2. Thermal Map: Absolute Temperature with Adaptive Scale
+### 2. Thermal Map: Synthetic Temperature with Adaptive Scale
 
-- The Data Provider outputs per-zone temperature floats, matched to the operational state.
+- The Data Provider outputs synthetic per-zone temperature values keyed to the operational state.
 - A Primvar writer maps these values to per-vertex/per-face colour attributes on the geometry.
-- **External View:** A single global LUT covering ~50 °C – ~2,000 °C is applied. The LUT is fixed; temperature distribution shifts with operational state.
-- **Close-Up View:** Per-module LUT with min/max values tuned to that module's physical range. This maximises colour contrast within the zone, avoiding the "everything is red" problem that would occur with the global scale at Close-Up resolution.
+- **External View:** A single illustrative LUT covering ~50 °C to ~2,000 °C is applied. The LUT is fixed; the synthetic distribution shifts with operational state.
+- **Close-Up View:** A per-module LUT uses reference-informed illustrative bounds. This maximises colour contrast within the zone, avoiding the "everything is red" problem that would occur with the global scale at Close-Up resolution.
 - The `M_Engine_XRay` MDL material samples the Primvar colour attribute directly.
 
 ### 3. Ghost Material: implementation logic
