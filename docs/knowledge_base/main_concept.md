@@ -178,8 +178,8 @@ A Kit-based application assembling the interactive experience.
 - **USD Composition:** Swaps active VariantSets / material bindings based on combined State × View × Visual Mode.
 - **UI:** Viewport-embedded HUD panel (`omni.ui.scene` overlay).
 - **Runtime Boundary:** The Omniverse app is treated as a contract-driven runtime layer, not a workstation-bound scene file. Packaging and portability constraints are governed by [ADR 006: Omniverse Runtime Boundary and Portability](../adr/006-omniverse-runtime-boundary.md).
-- **Template Reference:** The local `E:\omniverse_kit_app` folder may be
-  inspected as a read-only reference for Kit app structure, extension layout,
+- **Template Reference:** An external local reference copy of NVIDIA Omniverse
+  Kit App Template may be inspected for Kit app structure, extension layout,
   build/launch workflow, and future viewer/controller patterns. It is not Case
   02 content and must not be modified or used as an asset/documentation
   workspace.

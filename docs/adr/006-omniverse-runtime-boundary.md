@@ -38,12 +38,11 @@ The runtime must consume explicit contracts:
 Houdini `.hip` files, raw simulation authoring workflows, exploratory renders,
 and workstation-specific paths remain outside the runtime boundary.
 
-The local `E:\omniverse_kit_app` folder is a read-only reference copy of NVIDIA
-Omniverse Kit App Template plus the generated `msp.case03.blackwell` test
-application. It may inform Case 02 viewer/controller architecture, extension
-layout, app configuration, and build/launch patterns, but it is not authored
-Case 02 content and must not receive Case 02 USD, VDB, asset, or documentation
-files.
+An external local reference copy of NVIDIA Omniverse Kit App Template and a
+generated test application may inform Case 02 viewer/controller architecture,
+extension layout, app configuration, and build/launch patterns. It is not
+authored Case 02 content and must not receive Case 02 USD, VDB, asset, or
+documentation files.
 
 The runtime architecture must remain portable enough to support future
 containerisation or remote execution. Container images, cloud GPU execution,
