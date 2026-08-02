@@ -6,7 +6,7 @@
 ---
 
 > **Role:** L1-Oriented Digital Twin Visualisation Prototype (Mechanical Engineering)
-> **Stack:** Houdini 21.0.596 (Sim/PDG), Omniverse 2024.x (USD/Python), Isaac Sim, Jira Integration
+> **Stack:** Houdini 21.0.596 (Sim/PDG), Omniverse Kit-CAE / NVIDIA Flow (USD/Python), Isaac Sim, Jira Integration
 
 ---
 
@@ -19,24 +19,26 @@ component behaviour within a complex assembly and Testbed 80 context, without
 claiming predictive engine physics.
 
 **Key Use Case:**
-The prototype integrates **pre-baked Houdini caches for each operational regime**
-(Idle, Takeoff, Cruise, Max Thrust). These states are switched within Omniverse
-to communicate qualitative flow direction, thermal zones, combustion states,
-and component relationships. This demonstrates an L1-oriented visualisation
-workflow without live physics or predictive propulsion modelling.
+For each operational regime (Idle, Takeoff, Cruise, Max Thrust), Houdini
+authors a temporal VTI velocity dataset and manifest. Omniverse consumes that
+field through Kit-CAE and drives a bounded NVIDIA Flow smoke tracer, alongside
+USD streamlines, to communicate qualitative flow direction, thermal zones,
+combustion-state cues, and component relationships. This demonstrates an
+L1-oriented visualisation workflow without live physics or predictive
+propulsion modelling.
 
 **Project Focus:**
 
 - **Complex Assembly Management:** Handling 10,000+ parts using USD Variants and Payloads
-- **Simulation Pipeline:** Houdini-authored flow and thermal visualisation caches optimised into lightweight USD assets
+- **Simulation Pipeline:** Manifest-driven temporal VTI velocity fields, Kit-CAE, and bounded NVIDIA Flow smoke tracing for real-time visualisation
 - **Data-Driven Visualisation:** Python-based sensor streams (RPM, EGT, Vibration) synchronised with visual states
 
 ## What This Case Proves
 
 - Complex aerospace assembly management through USD Payloads, VariantSets, and
   module-level scene organisation.
-- Pre-baked Houdini simulation states structured for real-time Omniverse
-  playback.
+- Houdini-authored temporal velocity states and manifests structured for
+  real-time Omniverse playback through Kit-CAE and NVIDIA Flow.
 - Synthetic telemetry binding for RPM, EGT, vibration, fuel flow, thrust, and
   engine state visualisation.
 - Clear separation between public-reference geometry, external simulation
@@ -45,9 +47,11 @@ workflow without live physics or predictive propulsion modelling.
 ## Scope & Limitations
 
 Case 02 is a portfolio-grade, L1-oriented digital twin visualisation prototype.
-Its Houdini-authored, pre-baked flow and thermal caches are physically inspired
-representations for engineering communication and state-driven demonstration,
-not validated CFD results.
+Its Houdini-authored temporal velocity data, streamlines, and bounded Flow
+smoke tracer are physically inspired representations for engineering
+communication and state-driven demonstration, not validated CFD results.
+Direct playback of Houdini OpenVDB density sequences is not part of the runtime
+design because it does not meet the interactive performance target.
 
 The project does not claim predictive aerodynamic accuracy, certification
 suitability, real Trent 1000 telemetry, or proprietary engine geometry.
@@ -69,7 +73,7 @@ for the full claim boundary.
 ## 🎯 Key Technical Workflows (Visualisation Pipeline)
 
 - **Step 1: Geometry Foundation (Complex Assembly Management):** Leveraging USD Variants and Payloads to structure and standardize massive mechanical assemblies (10,000+ parts) for the digital twin.
-- **Step 2: Production Simulation (Optimised USD Pipelines):** Processing Houdini-authored flow and thermal caches into lightweight USD payloads for real-time Omniverse playback across different operational regimes.
+- **Step 2: Production Simulation (Real-Time Field Playback):** Exporting Houdini-authored temporal VTI velocity datasets and manifests, then using Kit-CAE and NVIDIA Flow to produce bounded runtime smoke tracing across operational regimes.
 - **Step 3: Synthetic Telemetry Integration (Data-Driven Visualisation):** Generating scenario-based RPM, EGT, and vibration streams in Python and binding them to visual states.
 
 ## 👁️ Visual Proof
@@ -160,6 +164,7 @@ content; do not modify it or mix project assets or documentation into it.
 ## 📜 Changelog
 
 - **Week of 13 July, 2026:** Added OpenUSD Python diagnostics through `usd-core`, restoring `pxr` access in the Case 02 environment and closing the dependency hygiene gap.
+- **2026-08-03:** Reframed runtime airflow visualisation around manifest-driven temporal VTI velocity data, Kit-CAE, and NVIDIA Flow; direct OpenVDB density playback is no longer a runtime path.
 - **Week of 6 July, 2026:** Added Omniverse MCP helper tooling and a runtime boundary ADR, then moved the project environment baseline to Python 3.11.x with the dependency lock refreshed.
 - **Week of 25 May, 2026:** Resolved the pip security lock technical debt and refreshed the dependency lock to keep the validation toolchain current.
 - **2026-03-04:** Refined Digital Twin core concept (`main_concept.md`). Formalized strict semantic discipline (no dual encoding), pre-computed VDB cutaway optimization, atomic UI switching, and integrated the Testbed 80 narrative context.

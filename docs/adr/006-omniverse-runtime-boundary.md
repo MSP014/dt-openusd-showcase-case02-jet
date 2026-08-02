@@ -7,9 +7,11 @@ Accepted
 ## Context
 
 Case 02 separates Houdini/Solaris production from the Omniverse runtime layer.
-Houdini produces USD, VDB, textures, cache metadata, telemetry primvars, and
-simulation state packages. The Omniverse Kit application consumes these outputs
-to present an interactive L1 digital twin.
+Houdini produces USD, temporal VTI velocity datasets, manifests, textures,
+telemetry primvars, and simulation state packages. Optional OpenVDB density
+caches remain authoring artefacts; the Omniverse runtime does not play density
+sequences directly. The Omniverse Kit application consumes the runtime outputs
+through Kit-CAE and NVIDIA Flow to present an interactive L1 digital twin.
 
 The runtime must not become a workstation-bound monolithic scene. It should be
 structured around explicit contracts so the project remains reproducible,
@@ -33,7 +35,8 @@ The runtime must consume explicit contracts:
 - telemetry schema;
 - camera and view presets;
 - relative asset paths;
-- performance boundaries for payloads, LODs, and simulation caches.
+- performance boundaries for payloads, LODs, temporal VTI fields, and bounded
+  Flow tracers.
 
 Houdini `.hip` files, raw simulation authoring workflows, exploratory renders,
 and workstation-specific paths remain outside the runtime boundary.

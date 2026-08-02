@@ -13,13 +13,13 @@ Managing memory (RAM/VRAM) is the primary bottleneck when assembling a Level 1 D
 ## 2. Payloads (Deferred/Lazy Load)
 
 * **What it is:** The asset definition is known, but the heavy data is not loaded into memory until explicitly requested ("Load Payload").
-* **When to use:** Use for ALL heavy high-poly CAD/STL geometry (the actual fan blades, turbine discs, complex casing shells) and heavy Houdini simulation caches (VDBs, heavy point clouds).
+* **When to use:** Use for ALL heavy high-poly CAD/STL geometry (the actual fan blades, turbine discs, complex casing shells) and optional offline Houdini authoring caches. Runtime temporal VTI velocity data is selected through a manifest and consumed by Kit-CAE rather than loaded as a density-volume payload.
 * **Rule for Case 02:** The actual mechanical parts must be stored behind Payloads. When the file is opened, the user sees a lightweight proxy stand-in. They can right-click and "Load Payload" only on the specific engine module (e.g., the Combustion Chamber) they are actively inspecting, saving massive amounts of RAM.
 
 ## 3. Best Practice Assembly Workflow
 
 1. **Asset Structure:** Use references to bring in the organizational `Xform` hierarchy.
-2. **Heavy Data:** Place the high-fidelity geometry and heavy `.vdb` caches behind payloads within those referenced assemblies.
+2. **Heavy Data:** Place high-fidelity geometry and any optional offline cache artefacts behind payloads within referenced assemblies. Keep the runtime VTI manifest and its field-selection metadata separate from density-volume payloads.
 3. **Scene Interaction:** The Omniverse stage opens instantly. The engineer selectively loads payloads as needed for analysis.
 
 ---

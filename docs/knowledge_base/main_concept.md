@@ -71,7 +71,9 @@ The engine is displayed at a distance sufficient for the full assembly to fit wi
 
 - **Geometry Zoning:** Engine topology is authored with explicit, hardcoded zone partitions (e.g., `grp_fan`, `grp_hp_compressor`, `grp_combustor`) in the USD scene graph. These explicit partitions dictate geometry load/unload (Payloads), material assignments, and act as the targets for telemetry data binding.
 - Pre-booleaned cutaway geometry (`engine_cutaway.usd`) bisects the engine along its longitudinal axis, improving rendering stability on complex volumetric or refractive boundaries while exposing all internal zones. Real-time dynamic clipping planes are explicitly disallowed.
-- The Houdini simulation cache plays back in full — internal flow, rotating stages, combustion Pyro.
+- The selected temporal VTI velocity field drives streamlines and the bounded
+  NVIDIA Flow tracer in full — internal flow cues, rotating stages, and
+  combustion-state presentation.
 - **Thermal Map:** A fixed, illustrative temperature scale (~50 °C to ~2,000 °C) maps the fan intake to blue and the exhaust to deep red. State-driven synthetic values change the intensity distribution; the map does not claim an exact engine temperature field.
 - **Velocity Vectors:** Internal primary (hot-section) and bypass (cold-section) streamlines are visualised. See §4 for the Ghost Material specification.
 
@@ -79,7 +81,8 @@ The engine is displayed at a distance sufficient for the full assembly to fit wi
 
 - The engine is shown in its complete, uncut exterior state (`engine_assembly.usd`) within a **Testbed 80-inspired** presentation context.
 - **Camera Interactivity:** Unlike the fixed orthographic feel of the Cutaway, this mode acts as an interactive "Viewing Gallery". The user can explore the full scale of the engine and the test cell environment either via multiple pre-set camera angles (e.g., *Control Room View*, *Pylon Mount*, *Exhaust View*) or via a constrained Free-Fly camera.
-- The same Houdini simulation cache is used, but the external casing remains fully opaque in Normal mode.
+- The same manifest-selected temporal VTI field drives the Flow tracer and
+  streamlines, while the external casing remains fully opaque in Normal mode.
 - **Thermal Map:** A qualitative axial heat gradient runs from cold colours at the intake to hot colours at the exhaust nozzle. Synthetic state values increase the displayed heat and plume intensity from Idle to Max Thrust.
 - **Velocity Vectors:** Streamlines of the exhaust plume extending behind the nozzle, plus the bypass airflow along the nacelle exterior. See §4 for the Ghost Material specification.
 
@@ -125,13 +128,18 @@ Each module has:
 ### Normal Mode
 
 - Full photorealistic rendering of engine geometry.
-- Houdini Pyro simulation cache active (flames in combustion, smoke/heat shimmer).
-- State transitions use a **10-frame Sequential Fade** on the Pyro Shader layer (5 frames fade to 0 opacity -> VariantSet Swap -> 5 frames fade to full opacity) to ensure visual continuity *without* simultaneous memory loading of two heavy VDB caches.
+- A bounded NVIDIA Flow smoke tracer is active for combustion-state cues,
+  smoke, and heat shimmer. Its motion is driven by the selected temporal VTI
+  velocity field through Kit-CAE.
+- State transitions use a **10-frame Sequential Fade** on the Flow tracer
+  layer (5 frames fade to 0 opacity -> VariantSet and manifest swap -> reset
+  tracer -> 5 frames fade to full opacity). This preserves visual continuity
+  without directly loading overlapping Houdini OpenVDB density sequences.
 
 ### X-Ray Thermal Mode
 
 - **Semantic Discipline (No Dual Encoding):** In this mode, color *strictly* encodes temperature (`TEMP °C`). By explicitly separating thermal data from velocity data, we reinforce the engineering rigor of the Digital Twin.
-- Pyro smoke/flame hidden.
+- Flow smoke tracer hidden.
 - Thermal heatmap projected onto geometry via per-component colour Primvars.
 - **External View:** Global scale (~50 °C → ~2,000 °C), fixed across states.
 - **Close-Up:** Per-module adaptive scale; recalibrates min/max to an illustrative, reference-informed range.
@@ -164,9 +172,10 @@ A Python module (`src/data_provider`) acting as the "Single Source of Truth" for
 Pre-baked assets generated in Houdini (Solaris/PDG). **All simulation is looped.**
 
 - **Format:** USD VariantSets.
-- **Matrix:** Exactly 4 master states (`Idle`, `Takeoff`, `Cruise`, `Max Thrust`). Camera and view modes (External/Close-Up) control USD Payload loading only, *not* the VDB simulation caches. There is no multiplication of caches based on camera angles.
+- **Matrix:** Exactly 4 master states (`Idle`, `Takeoff`, `Cruise`, `Max Thrust`). Camera and view modes (External/Close-Up) control USD Payload loading only, not temporal velocity datasets. There is no multiplication of datasets based on camera angles.
 - **Artifacts:**
-  - `.vdb` (Density/Temperature/Velocity grids for Pyro)
+  - temporal `.vti` velocity datasets plus manifest metadata (frame sequence,
+    timing, extent, units, and field names)
   - `.usd` (BasisCurves for streamlines)
   - Thermal Primvars embedded in geometry USD
 
@@ -200,18 +209,24 @@ A Kit-based application assembling the interactive experience.
 
 #### 1.2 Simulation Setup (Dynamic)
 
-- [ ] **Flow Visualisation:** Primary and bypass flow VDB caches.
+- [ ] **Flow Visualisation:** Primary and bypass temporal VTI velocity datasets
+  with a manifest entry per operational state.
   - Input: Engine collision geometry.
   - States: Idle (smooth, low-velocity cues) / Takeoff (high-velocity, energetic cues) / Cruise (steady cues) / Max Thrust (pronounced turbulence cues).
-- [ ] **Exhaust Plume Visualisation:** Separate VDB for external assembly view.
-- [ ] **Vector Field Gen:** Convert VDB velocity fields to `BasisCurves` (streamlines), colour-coded by relative velocity magnitude.
+- [ ] **Exhaust Plume Visualisation:** Separate bounded Flow smoke-tracer
+  configuration for the external assembly view.
+- [ ] **Vector Field Gen:** Export temporal VTI velocity fields for Kit-CAE and
+  convert the same authored field to `BasisCurves` (streamlines), colour-coded
+  by relative velocity magnitude.
 - [ ] **Thermal Map Gen:** Generate per-component vertex colour Primvars for a state-driven synthetic heatmap overlay.
 
 #### 1.3 Caching & Export
 
 - [ ] Batch Process via ROP: iterate `[Operational State]`. Camera modes do not multiply caches.
 - [ ] Loop all caches: ensure first and last frames connect seamlessly.
-- [ ] Volume Optimisation: crop the VDB export using the pre-booleaned cutaway geometry. Caching only the visible slice (rather than the full 360-degree cylindrical volume) will massively reduce disk footprint and I/O overhead. Prune remaining VDB density below threshold.
+- [ ] Field Optimisation: crop and resample the temporal VTI export to the
+  required cutaway or plume extent. Do not export unnecessary field volume,
+  frames, or vector resolution.
 - [ ] Curve Optimisation: resample streamlines, cull insignificant by length/velocity attribute.
 
 ### Phase 2: Asset Packaging (USD Structure)
@@ -224,7 +239,7 @@ A Kit-based application assembling the interactive experience.
 - [ ] `M_Engine_Ghost` — Fresnel semi-transparent / wireframe hologram (for Velocity Vectors mode).
 - [ ] `M_Engine_XRay` — thermal heatmap material driven by Primvar colour attribute.
 - [ ] `M_Airflow_Lines` — curve emission shader (velocity streamlines).
-- [ ] `M_Airflow_Smoke` — volume shader for Pyro.
+- [ ] `M_Airflow_Smoke` — material and bounded tracer configuration for NVIDIA Flow.
 
 #### 2.2 Composition (VariantSets)
 
@@ -258,15 +273,15 @@ A Kit-based application assembling the interactive experience.
 - [ ] **Atomic Switching:** On any UI input, the system resolves a single, combined VariantSet key. This swap is strictly atomic: it guarantees one coherent USD layout configuration. There are no mixed or undefined states, ensuring scene stability regardless of rapid user inputs.
 - [ ] On View Mode → CLOSE-UP: trigger camera jump to pre-set position for selected module.
   - [ ] On Visual Mode → VELOCITY VECTORS: swap geometry material to `M_Engine_Ghost`.
-  - [ ] State transitions for Volumetrics (Pyro): Utilize a **10-frame Sequential Fade**. The current VDB fades to complete transparency over 5 frames. Once invisible, the `OperationalState` VariantSet is atomically swapped (unloading the old cache, loading the new). The new VDB then fades in from transparency over 5 frames. This completely eliminates the I/O bottleneck of loading two overlapping VDB sequences.
+  - [ ] State transitions for volumetrics (Flow): utilize a **10-frame Sequential Fade**. The current tracer fades to complete transparency over 5 frames. Once invisible, the `OperationalState` VariantSet and temporal VTI manifest entry are atomically swapped, the Flow tracer is reset, and the new tracer fades in over 5 frames. Direct VDB density playback is not used.
   - [ ] HUD telemetry values concurrently lerp over these same transition frames between the old and new base values to ensure data/graphics synchronicity. Procedural "breathing" noise applies only during a stable state.
 
 ### Phase 4: Polish & Delivery
 
 - [ ] **Lighting:** Testbed 80 environment — industrial facility HDR, directional key light simulating the facility's overhead rigs.
-- [ ] **Performance Tuning:** Target 30+ FPS in External view; 24+ FPS in Close-Up with active Pyro.
+- [ ] **Performance Tuning:** Target 30+ FPS in External view; 24+ FPS in Close-Up with active Flow tracing.
   - Adjust Point Instancer settings.
-  - Reduce VDB and curve resolution if GPU-bound.
+  - Reduce VTI field resolution, tracer density, and curve resolution if GPU-bound.
 - [ ] **Documentation:** `README.md` "How to Run".
 
 ---
@@ -276,12 +291,18 @@ A Kit-based application assembling the interactive experience.
 > This section records representation and data-boundary decisions so the concept sections above stay focused on *what we show*. Nothing here changes the vision; it describes implementation mechanics.
 > **Why synthetic data?** We have no live engine telemetry feed. All parameters - RPM, EGT, fuel flow, thrust - are procedurally generated by the Data Provider in Demo Mode. The goal is to demonstrate an L1-oriented digital twin visualisation concept and technical-art pipeline competency. A real telemetry source could later be integrated through the provider contract, but would require schema mapping, calibration, validation, and operational review.
 
-### 1. Pyro: State Caches + Transition Logic
+### 1. Temporal Velocity Fields + Flow Transition Logic
 
-- All flow and combustion visualisation caches are **pre-baked in Houdini** into a state matrix.
-- Cached as USD VariantSets (`.vdb` volumes + `BasisCurves` streamlines) — no live sim at runtime.
-- All caches are **looped sequences** — start and end frames are continuity-matched.
-- State transitions use a **Sequential Fade** (Fade-Out -> Swap -> Fade-In) on the Pyro Shader layer opacity. This is an explicit performance optimization: by driving the volume to 100% transparent *before* triggering the VariantSet swap, we avoid holding two massive `.vdb` sequences in memory/VRAM simultaneously.
+- Houdini authors a temporal VTI velocity dataset and manifest entry for each
+  state; streamlines are derived from the same authored field.
+- Kit-CAE reads the selected field and NVIDIA Flow advects a bounded smoke
+  tracer from it. There is no live CFD, fuel, combustion, buoyancy, or
+  collision simulation at runtime.
+- All temporal datasets are looped sequences — start and end frames are
+  continuity-matched.
+- State transitions use a **Sequential Fade** (Fade-Out -> Swap -> Reset Flow
+  tracer -> Fade-In). This avoids direct playback and overlap of massive
+  `.vdb` density sequences in memory or VRAM.
 - Static geometry is never touched or faded during this transition.
 - **Why exclude Ignition?** Ignition and Spool-Up are non-looping, transient events. Authoring and caching a one-off 30-second spool-up visualisation requires substantial disk I/O for an effect that plays only once. Focusing the budget on looping the 4 master sustained states provides better value for the runtime experience.
 
@@ -306,8 +327,11 @@ A Kit-based application assembling the interactive experience.
 
 ### 5. Performance Contract: LOD & Payload Boundaries
 
-To guarantee the **30+ FPS** target in External view and **24+ FPS** in isolated Close-Up (with active Pyro), strict rendering budget constraints apply:
+To guarantee the **30+ FPS** target in External view and **24+ FPS** in isolated Close-Up (with active Flow tracing), strict rendering budget constraints apply:
 
-- **External View (Wide):** No dense volumetrics. VDB caches of smoke/fire are either disabled entirely (relying on geometry and colour emission) or replaced with severely downsampled proxy representations. Streamline curve counts are sparse.
-- **Close-Up View (Macro):** High-resolution volumetrics are allowed, but strictly *bounded* to the local module currently in focus. Secondary bounces and shadows from smoke in adjacent modules are culled.
+- **External View (Wide):** No dense volumetrics. The Flow tracer is disabled or
+  reduced to a sparse bounded proxy; streamline curve counts are sparse.
+- **Close-Up View (Macro):** Higher tracer density is allowed, but strictly
+  *bounded* to the local module currently in focus. Secondary bounces and
+  smoke shadows from adjacent modules are culled.
 - **Payloads:** Full internal PCB-level geometry detail (Close-Up HD meshes) is loaded as a USD **Payload** — only pulled in when Close-Up view is active. External view uses lower-resolution proxy meshes for internal zones visible through the cut plane.

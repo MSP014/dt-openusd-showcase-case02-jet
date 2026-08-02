@@ -11,9 +11,10 @@ synthetic telemetry and is not connected to a physical engine or test cell.
 It is not a certification-grade propulsion model, a CFD research contribution,
 or a claim of access to proprietary Rolls-Royce geometry or telemetry.
 
-The Houdini-authored flow, thermal, and combustion caches are physically
-inspired qualitative representations for engineering communication. They are
-not validated CFD, combustion, thermal, or structural-analysis results.
+The Houdini-authored temporal velocity data, streamlines, thermal treatment,
+and bounded NVIDIA Flow smoke tracing are physically inspired qualitative
+representations for engineering communication. They are not validated CFD,
+combustion, thermal, or structural-analysis results.
 
 ## What Is Validated
 
@@ -38,9 +39,11 @@ physical accuracy of an operational engine.
   schema and can be queried by Python or HUD logic.
 - **Runtime boundary:** Houdini-authored assets and simulation caches remain
   separate from the Omniverse Kit runtime layer.
-- **Performance intent:** payloads, LODs, proxy geometry, bounded VDBs, and
-  reduced streamline counts are used to keep the project oriented towards
-  interactive playback.
+- **Performance intent:** payloads, LODs, proxy geometry, manifest-driven
+  temporal VTI data, bounded Flow tracers, and reduced streamline counts are
+  used to keep the project oriented towards interactive playback. Direct
+  OpenVDB density-sequence playback is intentionally excluded from the runtime
+  path.
 
 ## What Is Not Claimed
 
@@ -53,6 +56,9 @@ physical accuracy of an operational engine.
 - No guarantee of exact internal dimensions for compressor, combustor, or
   turbine stages.
 - No live physics simulation at runtime.
+- No direct runtime playback of Houdini OpenVDB density caches.
+- No claim that NVIDIA Flow smoke tracing is a combustion, buoyancy, fuel, or
+  predictive fluid simulation.
 - No claim that the synthetic telemetry matches a specific real engine run.
 - No claim that visual thermal or velocity fields are physically exact.
 

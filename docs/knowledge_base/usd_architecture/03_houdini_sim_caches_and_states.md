@@ -1,10 +1,15 @@
 # Guideline 03: Houdini Simulation Caches and States
 
 A static jet engine is just a CAD model. To demonstrate the state-driven digital
-twin visualisation workflow, Case 02 integrates Houdini-authored caches (VDB
-volumes and geometry sequences) that qualitatively represent thermal,
-combustion, and flow behaviour. These caches are visual communication assets,
-not validated engineering simulation results.
+twin visualisation workflow, Case 02 uses Houdini-authored temporal VTI velocity
+datasets, manifests, and streamline geometry to qualitatively represent flow,
+thermal, and combustion-state cues. In Omniverse, Kit-CAE exposes the selected
+velocity field to a bounded NVIDIA Flow smoke tracer. These are visual
+communication assets, not validated engineering simulation results.
+
+Houdini OpenVDB density caches may remain useful during authoring, but direct
+VDB density-sequence playback is not a runtime path: it does not meet the
+interactive playback target.
 
 These caches must switch dynamically based on the 4 engine regimes:
 
@@ -29,19 +34,28 @@ The 4 engine regimes are handled via a USD **VariantSet** applied to the `/Engin
 1. **VariantSet Name:** `EngineRegime`
 2. **Variants:** `Idle`, `Takeoff`, `Cruise`, `MaxThrust`.
 
-By switching the `EngineRegime` variant at the top level, all child simulation caches (flames, exhaust, airflow) will automatically swap their active payloads to the correct simulation sequence.
+By switching the `EngineRegime` variant at the top level, the runtime selects
+the corresponding field entry from the temporal VTI manifest and updates the
+streamlines and Flow tracer configuration for that regime.
 
 ## 3. Handling Time-Varying Data
 
-Heavy VDB sequences (e.g., a 200-frame Takeoff flame sequence) must be managed using USD **Value Clips**.
+Each regime uses a temporal VTI velocity dataset with explicit manifest metadata
+for frame sequence, timing, spatial extent, units, and field names.
 
-- Do **not** author 200 individual frame payloads.
-- Use Houdini's USD ROP to stitch the `.vdb` frames into a lightweight topology/manifest file and point a Value Clip at the sequence.
+- Do **not** author one density-volume payload per frame for runtime playback.
+- Export the temporal velocity field from Houdini and register it in a
+  lightweight manifest.
+- At runtime, Kit-CAE reads the selected field; NVIDIA Flow uses it only to
+  advect a bounded smoke tracer. It is not a live CFD or combustion simulation.
 
 ---
 
 ## ✅ Definition of Done (DoD)
 
-- [ ] Combustion and exhaust simulations are separated from mechanical geometry.
+- [ ] Combustion-state and exhaust visualisation are separated from mechanical geometry.
 - [ ] An `EngineRegime` VariantSet exists at the `/Engine/Simulations` root level to toggle states.
-- [ ] VDB sequences are written using Value Clips to prevent monolithic file sizes and RAM exhaustion.
+- [ ] Each regime has a temporal VTI velocity entry in the manifest, with
+  documented timing, extent, and field metadata.
+- [ ] Direct OpenVDB density-sequence playback is absent from the Omniverse
+  runtime path.
