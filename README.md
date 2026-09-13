@@ -29,7 +29,6 @@ propulsion modelling.
 
 **Project Focus:**
 
-- **Complex Assembly Management:** Handling 10,000+ parts using USD Variants and Payloads
 - **Simulation Pipeline:** Manifest-driven temporal VTI velocity fields, Kit-CAE, and bounded NVIDIA Flow smoke tracing for real-time visualisation
 - **Data-Driven Visualisation:** Python-based sensor streams (RPM, EGT, Vibration) synchronised with visual states
 
@@ -65,8 +64,8 @@ for the full claim boundary.
 > **Deep Dive:**
 >
 > - [Rolls-Royce Factory Tour Transcript](./docs/knowledge_base/transcripts/Flightradar24%20-%202026.01.30%20-%20How%20Rolls-Royce%20Jet%20Engines%20Are%20Built.md)
-> - [Testbed 80 Technical Specifications](./docs/knowledge_base/reference_material/Testbed_80_Facility_Details.md)
-> - [FUI and HUD Design Notes](./docs/knowledge_base/reference_material/FUI%20and%20HUD.txt)
+> - [Testbed 80 Technical Specifications](./docs/knowledge_base/reference_material/testbed_80_facility_details.md)
+> - [FUI and HUD Design Notes](./docs/knowledge_base/reference_material/fui_and_hud.txt)
 
 ---
 
@@ -75,6 +74,39 @@ for the full claim boundary.
 - **Step 1: Geometry Foundation (Complex Assembly Management):** Leveraging USD Variants and Payloads to structure and standardize massive mechanical assemblies (10,000+ parts) for the digital twin.
 - **Step 2: Production Simulation (Real-Time Field Playback):** Exporting Houdini-authored temporal VTI velocity datasets and manifests, then using Kit-CAE and NVIDIA Flow to produce bounded runtime smoke tracing across operational regimes.
 - **Step 3: Synthetic Telemetry Integration (Data-Driven Visualisation):** Generating scenario-based RPM, EGT, and vibration streams in Python and binding them to visual states.
+
+## Planned Validation: VTI Fields and Flow Combustion Layer
+
+> **Work in Progress Hypothesis:** The following field contract and Flow
+> behaviour must be validated against the local Kit-CAE and NVIDIA Flow
+> extensions before it becomes an implementation commitment.
+
+The proposed temporal VTI package has one required vector field and two
+candidate thermal fields:
+
+- `velocity`: prescribed gas-flow direction and magnitude through the fan,
+  compressors, combustor, and turbines; the primary input for Kit-CAE flow
+  visualisation and runtime tracer motion.
+- `temperature_K`: candidate scalar field for engineering visualisation through
+  Kit-CAE colour mapping, slices, or other supported presentation methods.
+- `temperature_flow`: candidate normalised thermal field for a Flow input or
+  driver, if the validated local extension interface supports that connection.
+- `pressure`: optional diagnostic field only. It must not be presented as a
+  validated CFD result.
+- `density`: deliberately excluded from the initial VTI contract unless a later
+  validated use case requires it.
+
+The validation target is a clear division of responsibilities: Houdini provides
+prescribed, physically inspired gas-dynamics visualisation; Kit-CAE provides
+the engineering data layer; NVIDIA Flow may add a spatially bounded,
+real-time combustion-style visual layer through imported velocity, candidate
+combustor fuel emitters, and supported combustion behaviour.
+
+This is not a claim that Flow is a validated turbomachinery CFD solver, nor
+that the Houdini data represents a predictive Trent 1000 simulation. Until the
+field contract, emitter configuration, combustion response, reset behaviour,
+and performance are verified locally, the committed runtime baseline remains a
+bounded Flow smoke tracer driven by the selected VTI velocity field.
 
 ## 👁️ Visual Proof
 
@@ -115,8 +147,8 @@ The `docs/knowledge_base/` directory contains curated reference materials:
 
 - **[Knowledge Base Index](docs/knowledge_base/README.md)**: Central directory for all concepts, technical specs, and USD architecture rules.
 - **[Flightradar24 Factory Tour Transcript](docs/knowledge_base/transcripts/Flightradar24%20-%202026.01.30%20-%20How%20Rolls-Royce%20Jet%20Engines%20Are%20Built.md)**: Technical specifications (Trent 1000), sourced from Andy Dawkins (GM, Engine Overhaul Services) and Paul Flint (Chief of Capability Programs)
-- **[Testbed 80 Specifications](docs/knowledge_base/reference_material/Testbed_80_Facility_Details.md)**: Facility dimensions, acoustic treatment, structural details
-- **[FUI and HUD Design](docs/knowledge_base/reference_material/FUI%20and%20HUD.txt)**: Parameters for Heads-Up Display telemetry screens
+- **[Testbed 80 Specifications](docs/knowledge_base/reference_material/testbed_80_facility_details.md)**: Facility dimensions, acoustic treatment, structural details
+- **[FUI and HUD Design](docs/knowledge_base/reference_material/fui_and_hud.txt)**: Parameters for Heads-Up Display telemetry screens
 
 ---
 

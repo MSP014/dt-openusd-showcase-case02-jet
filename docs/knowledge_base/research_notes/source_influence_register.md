@@ -67,3 +67,32 @@ engine and testbed context.
 - Use this note only as a record of the structural inspiration.
 - Revisit package-manifest work after the USD, cache, telemetry, and visual proof
   artefacts are concrete enough to describe honestly.
+
+## RRT 1000 Training Material
+
+- **Title:** *RRT 1000 Updated (May 23)*
+- **Primary link:** https://fliphtml5.com/ognnl/rypx/RRT_1000_Updated_%28May_23%29/
+- **Domain:** Trent 1000 training material; EEC protection and LP shaft speed
+  sensing
+- **Related note:** [Trent 1000 LP Shaft Speed Synchrony](trent_1000_lp_shaft_speed_synchrony.md)
+
+### Take
+
+- Treat `N1C` and `N1T` as optional diagnostic observations derived from one
+  canonical synthetic LP shaft speed when the Case 02 model represents a
+  mechanically intact engine.
+- Carry the source-specific evidence and open parameter questions into `JET-16`
+  without changing the current runtime architecture.
+
+### Do Not Take
+
+- EEC implementation details, protective shutdown behaviour, alarm thresholds,
+  sensor redundancy logic, maintenance workflow, or fault simulation.
+- Any implication that Case 02 receives real engine signals or performs
+  health monitoring.
+
+### Park
+
+- Decide during `JET-16` whether a standard HUD needs one `N1` value only, or
+  whether a close-up diagnostic surface benefits from optional `N1C`, `N1T`,
+  and a derived consistency value.

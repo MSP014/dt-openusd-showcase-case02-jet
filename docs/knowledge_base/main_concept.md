@@ -8,7 +8,7 @@
 
 **Project:** Autonomous NVIDIA Omniverse Kit Application.
 **Mission:** Communicate qualitative internal flow, thermal, combustion, and component-state behaviour across four operational states - from standby to maximum thrust - through seamlessly switchable photorealistic, thermal, and flow-vector modes.
-**Narrative Context:** The engine is presented in a **Testbed 80-inspired** environment (see [Testbed 80 Facility Details](reference_material/Testbed_80_Facility_Details.md)). The testbed reference provides useful physical context for sensor points, readouts, and mounting structures without implying an exact digital replica of the real facility.
+**Narrative Context:** The engine is presented in a **Testbed 80-inspired** environment (see [Testbed 80 Facility Details](reference_material/testbed_80_facility_details.md)). The testbed reference provides useful physical context for sensor points, readouts, and mounting structures without implying an exact digital replica of the real facility.
 **Engineering Logic:** A single pre-baked visualisation matrix (4 states x looping USD VariantSets) drives all visual layers, with zero live physics computation at runtime.
 
 ---

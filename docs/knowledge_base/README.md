@@ -33,9 +33,9 @@ twin terminology. These files are inputs, not project contracts by themselves.
 
 | Material | Use |
 | :--- | :--- |
-| [Engine Technical Specifications](reference_material/Trent%201000%20-%20Engine%20Technical%20Specifications.md) | Baseline public physical data for dimensions, thrust, and spool ranges. |
-| [Testbed 80 Facility Details](reference_material/Testbed_80_Facility_Details.md) | Facility scale and narrative context for the test-cell environment. |
-| [FUI and HUD Data Mapping](reference_material/FUI%20and%20HUD.txt) | Raw telemetry labels and UI-facing data names. |
+| [Engine Technical Specifications](reference_material/trent_1000_engine_technical_specifications.md) | Baseline public physical data for dimensions, thrust, and spool ranges. |
+| [Testbed 80 Facility Details](reference_material/testbed_80_facility_details.md) | Facility scale and narrative context for the test-cell environment. |
+| [FUI and HUD Data Mapping](reference_material/fui_and_hud.txt) | Raw telemetry labels and UI-facing data names. |
 | [Digital Twin Maturity Model PDF](reference_material/digital_twins_a_maturity_model_for_their_classification_and_evaluation.pdf) | Source material behind the maturity-level framing. |
 
 ## Research Intake

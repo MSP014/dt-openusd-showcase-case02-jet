@@ -68,6 +68,7 @@ _There are currently no unresolved technical debts._
 
 #### Check Log
 
+- **2026-09-13:** Follow-up check found `pip-tools 7.6.1` available while `case02-env` remains on `7.5.3`; `pip` also reports `26.2.1` available while `26.1.1` is installed. No environment or lock-file changes were made during session bootstrap; dependency maintenance remains due for a dedicated quality-gate pass.
 - **2026-07-17:** Follow-up check completed. Restored live `case02-env` to `pip 26.1.1`; confirmed `pip-tools 7.5.3`; recompiled the lock file while adding `usd-core==26.5`; `pip check` and `pip-audit -r requirements.txt` passed.
 - **2026-07-01:** Follow-up check completed. `pip-tools` remains current at `7.5.3` (installed/latest). `pip` reports a newer patch release (`26.1.2`) than the installed `26.1.1`; no lock refresh was performed during session bootstrap.
 - **2026-05-21:** Tech debt closed after environment upgrade and lock-file regeneration.
